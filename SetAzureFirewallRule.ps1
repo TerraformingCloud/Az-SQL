@@ -8,6 +8,26 @@ param
     [String] $AzureFirewallName =   'ADOAgentFW'
 )
 
-$agentIP = curl ifconfig.me
 
-New-AzureRMSqlServerFirewallRule -ResourceGroupName $ResourceGroup -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -StartIPAddress $agentIP -EndIPAddress $agentIP
+#New-AzureRMSqlServerFirewallRule -ResourceGroupName $ResourceGroup -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -StartIPAddress $agentIP -EndIPAddress $agentIP
+
+$ErrorActionPreference = 'Stop'
+
+function New-AzureSQLServerFirewallRule {
+    $agentIP = curl ifconfig.me
+    New-AzureRMSqlServerFirewallRule -StartIPAddress $agentIp -EndIPAddress $agentIp -FirewallRuleName $AzureFirewallName -ServerName $sqlserver -ResourceGroupName $ResourceGroupName
+  }
+
+function Update-AzureSQLServerFirewallRule{
+    $agentIP = curl ifconfig.me
+    Set-AzureRMSqlServerFirewallRule -StartIPAddress $agentIp -EndIPAddress $agentIp -FirewallRuleName $AzureFirewallName -ServerName $sqlserver -ResourceGroupName $ResourceGroupName
+  }
+  
+  If ((Get-AzureRMSqlServerFirewallRule -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue) -eq $null)
+  {
+    New-AzureRMSQLServerFirewallRule
+  }
+  else
+  {
+    Update-AzureSQLServerFirewallRule
+  }
