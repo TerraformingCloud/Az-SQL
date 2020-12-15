@@ -4,9 +4,9 @@
 [CmdletBinding (DefaultParameterSetName = 'None')]
 param
 (
-    [String] [Parameter(Mandatory = $true)] $sqlservername,
+    [String] $sqlserver = 'vamsi-sqlserver13',
     [String] $ResourceGroup =   'Sql-rg',
     [String] $AzureFirewallName =   'ADOAgentFW'
 )
 
-Remove-AzureRMSqlServerFirewallRule -ServerName $sqlservername -FirewallRuleName $AzureFirewallName -ResourceGroupName $ResourceGroup
+Remove-AzureRMSqlServerFirewallRule -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -ResourceGroupName $ResourceGroup
