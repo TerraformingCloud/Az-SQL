@@ -9,12 +9,12 @@ param
     [String] $AzureFirewallName =   'ADOAgentFW'
 )
 
-#Remove-AzureRMSqlServerFirewallRule -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -ResourceGroupName $ResourceGroup
+Remove-AzureRMSqlServerFirewallRule -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -ResourceGroupName $ResourceGroupName
 
 
-$ErrorActionPreference = 'Stop'
+# $ErrorActionPreference = 'Stop'
 
-If ((Get-AzureRMSqlServerFirewallRule -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue))
-{
-    Remove-AzureRmSqlServerFirewallRule -FirewallRuleName $AzureFirewallName -ServerName $sqlserver -ResourceGroupName $ResourceGroupName
-}
+# If ((Get-AzureRMSqlServerFirewallRule -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue))
+# {
+#     Remove-AzureRmSqlServerFirewallRule -FirewallRuleName $AzureFirewallName -ServerName $sqlserver -ResourceGroupName $ResourceGroupName
+# }
