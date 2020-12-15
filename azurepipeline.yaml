@@ -1,0 +1,35 @@
+
+name: 0.1.$(Rev:r)
+
+trigger: none
+
+variables:
+  AzureSubscription: 'Terraform SPN'
+  ServerName: '$(sqlservername)'
+  DatabaseName: '$(sqldbname)'
+  AdminUser: '$(sqlusername)'
+  AdminPassword: '$(sqlpassword)'
+  SQLFile: '$(Build.SourcesDirectory)/deploy.sql'
+
+steps:
+- task: AzurePowerShell@2
+  displayName: Azure PowerShell script
+  inputs:
+    azureSubscription: '$(AzureSubscription)'
+    ScriptPath: '$(Build.SourcesDirectory)\SetAzureFirewallRule.ps1'
+    ScriptArguments: '$(ServerName)'
+    azurePowerShellVersion: LatestVersion
+
+- task: CmdLine@1
+  displayName: Run Sqlcmd
+  inputs:
+    filename: Sqlcmd
+    arguments: '-S $(ServerName) -U $(AdminUser) -P $(AdminPassword) -d $(DatabaseName) -i $(SQLFile)'
+
+- task: AzurePowerShell@2
+  displayName: Azure PowerShell script
+  inputs:
+    azureSubscription: '$(AzureSubscription)'
+    ScriptPath: '$(Build.SourcesDirectory)\RemoveAzureFirewallRule.ps1'
+    ScriptArguments: '$(ServerName)'
+    azurePowerShellVersion: LatestVersion
