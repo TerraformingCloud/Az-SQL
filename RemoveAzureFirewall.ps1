@@ -5,7 +5,7 @@
 param
 (
     [String] $sqlserver = 'vamsi-sqlserver13',
-    [String] $ResourceGroup =   'Sql-rg',
+    [String] $ResourceGroupName =   'Sql-rg',
     [String] $AzureFirewallName =   'ADOAgentFW'
 )
 
