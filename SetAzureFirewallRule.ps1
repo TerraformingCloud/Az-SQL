@@ -25,7 +25,7 @@ function Update-AzureSQLServerFirewallRule{
   
   If ((Get-AzureRMSqlServerFirewallRule -ServerName $sqlserver -FirewallRuleName $AzureFirewallName -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue) -eq $null)
   {
-    New-AzureRMSQLServerFirewallRule
+    New-AzureSQLServerFirewallRule
   }
   else
   {
