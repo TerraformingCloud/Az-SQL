@@ -11,6 +11,9 @@ variables:
   AdminPassword: '$(sqlpassword)'
   SQLFile: '$(Build.SourcesDirectory)/deploy.sql'
 
+pool:
+  vmImage: 'vs2017-win2016'
+
 steps:
 - task: AzurePowerShell@2
   displayName: Azure PowerShell script
